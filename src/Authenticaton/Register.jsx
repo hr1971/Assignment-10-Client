@@ -1,10 +1,77 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  useEffect(() => {
+    document.title = "Register";
+  });
+
   const [show, setShow] = useState(false);
+
+  const {
+    signInWithGoogle,
+    createUserFunc,
+    user,
+    setUser,
+    updateUserProfile,
+    setLoading,
+  } = use(AuthContext);
+
+  const navigate = useNavigate();
+  const from = location.state || "/";
+
+
+  const handleRegister = (e) => {
+    e.preventDefault()
+    const form = e.target
+    const email = form.email.value 
+    const password = form.password.value 
+    const displayName = form.name.value 
+    const photoURL = form.photo.value 
+    // console.log({email,password,displayName,photoURL})
+
+    // toast.loading('Creating user....')
+
+
+
+
+    createUserFunc(email,password)
+    .then(res => {
+      navigate(from)
+      
+      updateUserProfile(displayName,photoURL)
+      .then(() => {
+        toast.success("User Created Successfully!")
+      })
+      .catch(error => {
+
+      })
+      .catch(error => {
+        const errorMessage = error.message;
+        toast.error(errorMessage)
+      })
+    })
+
+  }
+
+
+  const handleGoogleSignin = () => {
+    signInWithGoogle()
+    .then(res => {
+        toast.success("User Created Successfully!")
+        navigate(from)
+        setLoading(false)
+        setUser(res.user)
+    })
+    .catch(error => {
+      toast.error(error.message)
+      console.log(error)
+    })
+  }
 
   return (
     <div className="hero  min-h-screen">
@@ -17,7 +84,7 @@ const Register = () => {
               Register Your Account
             </h1>
 
-            <form onSubmit={""}>
+            <form onSubmit={handleRegister}>
               <fieldset className="fieldset">
                 <label className="label">Name</label>
                 <input
@@ -45,7 +112,7 @@ const Register = () => {
                   name="email"
                   required
                 />
-                
+
                 <div className="relative text-left">
                   <label className="label mb-1 text-left">Password</label>
                   <input
@@ -68,7 +135,7 @@ const Register = () => {
                 </button>
                 <button
                   type="button"
-                  onClick={""}
+                  onClick={handleGoogleSignin}
                   className="flex items-center justify-center gap-3 border text-gray-800 px-5 py-2 rounded-lg w-full font-semibold hover:bg-gray-200 transition-colors cursor-pointer mt-5"
                 >
                   <img
