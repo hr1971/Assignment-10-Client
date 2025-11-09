@@ -30,14 +30,16 @@ export const router = createBrowserRouter([
         path:'/my-connections',
         element:<MyConnections />,
       },
-      {
-        path:'/login',
+      
+    ],
+    
+  },
+  {
+        path:'/auth/login',
         element:<Login />,
       },
       {
-        path:'/register',
+        path:'/auth/register',
         element:<Register />,
       }
-    ]
-  },
 ]);
