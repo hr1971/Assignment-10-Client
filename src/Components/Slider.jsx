@@ -28,7 +28,7 @@ const Slider = () => {
       >
         {/* --- Slide 1 --- */}
         <SwiperSlide>
-          <div className="bg-blue-100 p-6 rounded-2xl shadow-lg text-center">
+          <div className="bg-[#a2d2ff] p-6 rounded-2xl shadow-lg text-center">
             <img
               src="https://i.ibb.co.com/HTPzQ772/arabic-man-watching-online-webinar-sitting-kitchen-with-computer-enjoying-distance-learning.jpg"
               alt="Arabic Man"
@@ -41,7 +41,7 @@ const Slider = () => {
 
         {/* --- Slide 2 --- */}
         <SwiperSlide>
-          <div className="bg-blue-100 p-6 rounded-2xl shadow-lg text-center">
+          <div className="bg-[#a2d2ff] p-6 rounded-2xl shadow-lg text-center">
             <img
               src="https://i.ibb.co.com/rKVNhTDt/front-view-work-process-two-businessmen-discussing-project-while-sitting-desk.jpg"
               alt="Toy Car"
@@ -53,7 +53,7 @@ const Slider = () => {
 
         {/* --- Slide 3 --- */}
         <SwiperSlide>
-          <div className="bg-blue-100 p-6 rounded-2xl shadow-lg text-center">
+          <div className="bg-[#a2d2ff] p-6 rounded-2xl shadow-lg text-center">
             <img
               src="https://i.ibb.co.com/hJf162JB/technology-integrated-everyday-life.jpg"
               alt="Building Blocks"
@@ -66,7 +66,7 @@ const Slider = () => {
 
         {/* --- Slide 4 (extra for loop) --- */}
         <SwiperSlide>
-          <div className="bg-blue-100 p-6 rounded-2xl shadow-lg text-center">
+          <div className="bg-[#a2d2ff] p-6 rounded-2xl shadow-lg text-center">
             <img
               src="https://i.ibb.co.com/0jq8NcSN/firmbee-com-gcs-NOs-PEXfs-unsplash.jpg"
               alt="Cute Doll"
