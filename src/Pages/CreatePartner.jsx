@@ -1,8 +1,42 @@
 import React, { use } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import toast from "react-hot-toast";
 
 const CreatePartner = () => {
   const { user } = use(AuthContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = {
+      name: e.target.name.value,
+      profileimage: e.target.photo.value,
+      subject: e.target.subject.value,
+      studyMode: e.target.modes.value,
+      availabilityTime: e.target.time.value,
+      location: e.target.location.value,
+      experienceLevel: e.target.experience.value,
+      rating: e.target.rating.value,
+      partnerCount: 0,
+      email: user.email,
+    };
+
+    fetch('http://localhost:5000/students', {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        toast.success("Successfully Added");
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="card border border-gray-200 bg-base-100 w-full max-w-md mx-auto shadow-2xl rounded-2xl">
@@ -10,9 +44,9 @@ const CreatePartner = () => {
         <h2 className="text-2xl font-bold text-center mb-6">
           Create Partner Profile
         </h2>
-        <form onSubmit={``} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name Field */}
-          <div  className="text-left">
+          <div className="text-left">
             <label className="label font-medium">Name</label>
             <input
               type="text"
@@ -23,29 +57,28 @@ const CreatePartner = () => {
             />
           </div>
 
-          {/* Category Dropdown */}
-          <div  className="text-left">
+          {/* Modes Dropdown */}
+          <div className="text-left">
             <label className="label font-medium">Modes</label>
             <select
               defaultValue={""}
-              name="category"
+              name="modes"
               required
               className="select w-full rounded-full focus:border-0 focus:outline-gray-200"
             >
               <option value="" disabled>
                 Study Mode
               </option>
-              <option value="Vehicles">Online</option>
-              <option value="Plants">Offline</option>
-              
+              <option value="Online">Online</option>
+              <option value="Offline">Offline</option>
             </select>
           </div>
           {/* subjects */}
-          <div  className="text-left">
+          <div className="text-left">
             <label className="label font-medium">Subjects</label>
             <select
               defaultValue={""}
-              name="category"
+              name="subject"
               required
               className="select w-full rounded-full focus:border-0 focus:outline-gray-200"
             >
@@ -57,26 +90,19 @@ const CreatePartner = () => {
               <option value="Computer Science">Computer Science</option>
               <option value="English">English</option>
               <option value="Biology">Biology</option>
-              <option
-                value="Economics">
-                Economics
-              </option>
+              <option value="Economics">Economics</option>
               <option value="Chemistry">Chemistry</option>
-              <option
-                value="Business Studies"
-              >
-                Business Studies
-              </option>
+              <option value="Business Studies">Business Studies</option>
             </select>
           </div>
 
           {/* experience */}
 
-           <div  className="text-left">
+          <div className="text-left">
             <label className="label font-medium">Experience</label>
             <select
               defaultValue={""}
-              name="category"
+              name="experience"
               required
               className="select w-full rounded-full focus:border-0 focus:outline-gray-200"
             >
@@ -86,31 +112,28 @@ const CreatePartner = () => {
               <option value="Beginner">Beginner</option>
               <option value="Intermediate">Intermediate</option>
               <option value="Advanced">Advanced</option>
-             
             </select>
           </div>
 
           {/*time  */}
-         <div  className="text-left">
+          <div className="text-left">
             <label className="label font-medium">Availability</label>
             <input
               type="text"
-              name="name"
+              name="time"
               required
               className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="Evening 6–9 PM"
             />
           </div>
 
-          
-
           {/* location */}
 
-           <div  className="text-left">
+          <div className="text-left">
             <label className="label font-medium">Location</label>
             <input
               type="text"
-              name="name"
+              name="location"
               required
               className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="Dhaka"
@@ -119,37 +142,38 @@ const CreatePartner = () => {
 
           {/* rating */}
 
-           <div  className="text-left">
+          <div className="text-left">
             <label className="label font-medium">Rating</label>
             <input
               type="number"
-              name="name"
+              step="0.1"
+              name="rating"
               required
               className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="5.0"
             />
           </div>
 
-         {/* partner count */}
+          {/* partner count */}
 
-          <div  className="text-left">
+          <div className="text-left">
             <label className="label font-medium">Partner Count</label>
             <input
               type="number"
-              name="name"
+              name="partner"
               required
               className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="0"
-              defaultValue={'0'}
+              defaultValue={"0"}
             />
           </div>
 
           {/* Thumbnail URL */}
-          <div  className="text-left">
+          <div className="text-left">
             <label className="label font-medium">Photo URL</label>
             <input
               type="url"
-              name="thumbnail"
+              name="photo"
               required
               className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="https://example.com/image.jpg"
@@ -160,7 +184,7 @@ const CreatePartner = () => {
             <label className="label font-medium text-left">Email</label>
             <input
               type="email"
-              name="thumbnail"
+              name="email"
               required
               className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="https://example.com"
