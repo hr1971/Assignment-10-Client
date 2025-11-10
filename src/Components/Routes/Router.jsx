@@ -7,7 +7,8 @@ import Login from "../../Authenticaton/Login";
 import Register from "../../Authenticaton/Register";
 import CreatePartner from "../../Pages/CreatePartner";
 import MyConnections from "../../Pages/MyConnections";
-
+import PrivateRoute from "./PrivateRoute";
+import PartnerDetails from "../../Pages/PartnerDetails";
 
 export const router = createBrowserRouter([
   {
@@ -15,31 +16,48 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path:'/',
+        index: true,
         element: <Home />,
       },
       {
-        path:'/find-partners',
-        element:<FindPartners />,
+        path: "/create-partner",
+        element: (
+          <PrivateRoute>
+            <CreatePartner />
+          </PrivateRoute>
+        ),
       },
       {
-        path:'/create-partner',
-        element:<CreatePartner />,
+        path: "/find-partners",
+        element: <FindPartners />,
+       loader: () => fetch('http://localhost:5000/students') 
+      },
+
+      {
+        path: "/my-connections",
+        element: (
+          <PrivateRoute>
+            <MyConnections />
+          </PrivateRoute>
+        ),
       },
       {
-        path:'/my-connections',
-        element:<MyConnections />,
+        path: "/partner-details/:id",
+        element: (
+          <PrivateRoute>
+            <PartnerDetails />
+          </PrivateRoute>
+        ),
       },
-      
     ],
-    
+  },
+
+  {
+    path: "/auth/login",
+    element: <Login />,
   },
   {
-        path:'/auth/login',
-        element:<Login />,
-      },
-      {
-        path:'/auth/register',
-        element:<Register />,
-      }
+    path: "/auth/register",
+    element: <Register />,
+  },
 ]);

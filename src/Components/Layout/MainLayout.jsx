@@ -11,11 +11,10 @@ const MainLayout = () => {
         <Navbar />
       </header>
       <main>
-        <section>
-            <Slider />
+        <section className="slider">
+          {/* <Slider /> */}
         </section>
         <section>
-          {" "}
           <Outlet />
         </section>
       </main>
