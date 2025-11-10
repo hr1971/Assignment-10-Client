@@ -1,6 +1,7 @@
 import React, { use } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const CreatePartner = () => {
   const { user } = use(AuthContext);
@@ -17,21 +18,27 @@ const CreatePartner = () => {
       location: e.target.location.value,
       experienceLevel: e.target.experience.value,
       rating: e.target.rating.value,
-      partnerCount: 0,
+      patnerCount: 0,
       email: user.email,
     };
 
-    fetch('http://localhost:5000/students', {
+    fetch("http://localhost:5000/students", {
       method: "POST",
       headers: {
-        "content-type": "application/json"
+        "content-type": "application/json",
       },
       body: JSON.stringify(formData),
     })
       .then((res) => res.json())
       .then((data) => {
-        toast.success("Successfully Added");
+        // toast.success("Successfully Added");
+        Swal.fire({
+          title: "Good job!",
+          text: "Successfully Added!",
+          icon: "success",
+        });
         console.log(data);
+        e.target.reset();
       })
       .catch((err) => {
         console.log(err);
