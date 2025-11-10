@@ -111,7 +111,7 @@ const Navbar = () => {
                 <li>
                   <button
                     onClick={signOutFunc}
-                    className="btn btn-xs text-left from-blue-500 to-[#B8B8FF] "
+                    className="btn btn-xs text-left bg-linear-to-r from-blue-500 to-[#B8B8FF] "
                   >
                     {/* <IoLogOut /> */}
                      Logout
