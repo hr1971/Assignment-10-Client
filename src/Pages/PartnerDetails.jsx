@@ -19,6 +19,7 @@ const PartnerDetails = () => {
   const [study,setStudy] = useState({})
   const navigate = useNavigate()
   const {id} = useParams()
+  const [refetch,setRefetch] = useState(false)
 
   useEffect(()=> {
     fetch(`http://localhost:5000/students/${id}`,{
@@ -30,10 +31,10 @@ const PartnerDetails = () => {
       .then((data) => {
         setStudy(data);
         console.log(" Api called!")
-        // console.log(data);
+        console.log(data);
         setLoading(false);
       });
-  },[user,id])
+  },[user,id,refetch])
 
   if (loading) {
     return <Loading />;
@@ -46,14 +47,20 @@ const PartnerDetails = () => {
       subject:study.subject,
       request_by:user.email,
       studyMode:study.studyMode,
+      availabilityTime:study.availabilityTime,
+      email:study.email,
+      location:study.location,
+      patnerCount:study.patnerCount,
+      rating:study.rating,
+      id:study.id,
     }
     // console.log({sendRequest})
-    fetch(`http://localhost:5000/request`,{
+    fetch(`http://localhost:5000/request/${study._id}`,{
       method:'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body:JSON.stringify({...study, request_by:user.email}),
+      body:JSON.stringify(sendRequest),
     })
     .then(res => res.json())
     .then(data => {
@@ -64,6 +71,7 @@ const PartnerDetails = () => {
       icon: "success",
   
     })
+    setRefetch(!refetch)
     })
   };
 
