@@ -1,32 +1,45 @@
-import React, { use,  useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Login = () => {
-  const { signInFunc, signInWithGoogle, setLoading, setUser } =
+   useEffect(() => {
+      document.title = "Login";
+    });
+  const { signInFunc, signInWithGoogle, setLoading, setUser,user } =
     use(AuthContext);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state || "/";
+
+  const from = location.state?.from?.pathname || '/';
+
+  // const from = location.state || "/";
   const emailRef = useRef(null);
 
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log({ email, password });
+    // console.log({ email, password });
 
     signInFunc(email, password)
       .then((res) => {
         const user = res.user;
         e.target.reset();
-        navigate(`${location.state ? location.state : "/"}`);
+        
+      Swal.fire({
+        title: "Good job!",
+        text: "LOgin Successful!",
+        icon: "success",
+      });
+      navigate(from,{replace:true})
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -40,8 +53,15 @@ const Login = () => {
     signInWithGoogle().then((res) => {
       setLoading(false);
       setUser(res.user);
-      navigate(from);
-      toast.success("Login Successful");
+      // navigate(from);
+      // navigate(`${location.state ? location.state : "/"}`);
+
+      Swal.fire({
+        title: "Good job!",
+        text: "LOgin Successful!",
+        icon: "success",
+      });
+      navigate(from,{replace:true})
     });
   };
 

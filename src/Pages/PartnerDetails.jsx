@@ -18,7 +18,7 @@ const PartnerDetails = () => {
     return <Loading />;
   }
 
-  const handleDownload = () => {
+  const handleRequest = () => {
     console.log("Download clicked!");
   };
 
@@ -67,9 +67,9 @@ const PartnerDetails = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap gap-4 pt-6">
+            <div onClick={handleRequest} className="flex flex-wrap gap-4 pt-6">
               <Link
-                to={`/update-model/${data?._id}`}
+                // to={`/update-model/${data?._id}`}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-0.5"
               >
                 <UserPlus className="w-4 h-4" /> Send Request

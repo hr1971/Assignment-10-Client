@@ -111,7 +111,7 @@ const Navbar = () => {
                 <li>
                   <button
                     onClick={signOutFunc}
-                    className="btn btn-xs text-left bg-linear-to-r from-blue-500 to-[#B8B8FF] "
+                    className="btn btn-xs text-left bg-gradient-to-r from-blue-500  to-sky-500 "
                   >
                     {/* <IoLogOut /> */}
                      Logout
@@ -122,7 +122,7 @@ const Navbar = () => {
           ) : (
             <Link
               to={"/auth/login"}
-              className="btn rounded-full   btn-outline from-blue-500 to-[#B8B8FF] t"
+              className="btn rounded-full   btn-outline bg-gradient-to-r from-blue-500 to-indigo-600"
             >
               {" "}
               Login
