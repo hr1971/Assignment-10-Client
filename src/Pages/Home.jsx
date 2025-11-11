@@ -11,7 +11,7 @@ const Home = () => {
             
             <Slider></Slider>
 
-            <div className='text-center text-xl font-bold mt-10'>
+            <div className='text-center text-2xl text-blue-500 font-bold mt-10'>
             Top Study Partner
             </div>
             

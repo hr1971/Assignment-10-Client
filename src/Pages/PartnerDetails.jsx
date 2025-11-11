@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import Loading from '../Components/Loading/Loading';
-import { Link, useLoaderData } from 'react-router';
+import { Link,  useNavigate, useParams } from 'react-router';
 import { 
   Star, MapPin, BookOpen, Users, Clock, 
   GraduationCap, Download, Trash2, Pencil, 
@@ -8,18 +8,63 @@ import {
   UserPlus
 } from "lucide-react";
 import InfoItem from '../Components/InfoItem';
+import { AuthContext } from '../Context/AuthContext';
+import Swal from 'sweetalert2';
+
+// -------------------------------------
 
 const PartnerDetails = () => {
+  const {user} = use(AuthContext)
   const [loading, setLoading] = useState(false);
-  const data = useLoaderData();
-  console.log(data);
+  const [study,setStudy] = useState({})
+  const navigate = useNavigate()
+  const {id} = useParams()
+
+  useEffect(()=> {
+    fetch(`http://localhost:5000/students/${id}`,{
+      headers: {
+        authorization: `Bearer ${user.accessToken}`,
+      },
+    })
+     .then((res) => res.json())
+      .then((data) => {
+        setStudy(data);
+        console.log(" Api called!")
+        // console.log(data);
+        setLoading(false);
+      });
+  },[user,id])
 
   if (loading) {
     return <Loading />;
   }
 
   const handleRequest = () => {
-    console.log("Download clicked!");
+    const sendRequest = {
+      name:study.name,
+      profileImage:study.profileimage,
+      subject:study.subject,
+      request_by:user.email,
+      studyMode:study.studyMode,
+    }
+    // console.log({sendRequest})
+    fetch(`http://localhost:5000/request`,{
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify({...study, request_by:user.email}),
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+       Swal.fire({
+      title: "Good job",
+      text: "Request Send Successfully",
+      icon: "success",
+  
+    })
+    })
   };
 
   const handleDelete = () => {
@@ -37,8 +82,8 @@ const PartnerDetails = () => {
           {/* Profile Image */}
           <div className="w-full md:w-1/3 flex justify-center">
             <img
-              src={data?.profileimage}
-              alt={data?.name || "Profile"}
+              src={study?.profileimage}
+              alt={study?.name || "Profile"}
               className="w-56 h-56 object-cover rounded-2xl shadow-md border border-blue-200"
             />
           </div>
@@ -48,22 +93,22 @@ const PartnerDetails = () => {
             {/* Name + Rating */}
             <div className="flex flex-wrap items-center justify-between">
               <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                {data?.name}
+                {study?.name}
               </h1>
               <div className="flex items-center gap-1 bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium">
                 <Star className="w-4 h-4 fill-yellow-400" />
-                <span>{data?.rating || "4.8"}</span>
+                <span>{study?.rating || "4.8"}</span>
               </div>
             </div>
 
             {/* Info Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 text-gray-700">
-              <InfoItem icon={<BookOpen />} label="Subject" value={data?.subject} />
-              <InfoItem icon={<Clock />} label="Study Mode" value={data?.studyMode} />
-              <InfoItem icon={<GraduationCap />} label="Experience Level" value={data?.experienceLevel} />
-              <InfoItem icon={<Users />} label="Partner Count" value={data?.patnerCount} />
-              <InfoItem icon={<MapPin />} label="Location" value={data?.location || "Not provided"} />
-              <InfoItem icon={<Clock />} label="Availability" value={data?.availabilityTime} />
+              <InfoItem icon={<BookOpen />} label="Subject" value={study?.subject} />
+              <InfoItem icon={<Clock />} label="Study Mode" value={study?.studyMode} />
+              <InfoItem icon={<GraduationCap />} label="Experience Level" value={study?.experienceLevel} />
+              <InfoItem icon={<Users />} label="Partner Count" value={study?.patnerCount} />
+              <InfoItem icon={<MapPin />} label="Location" value={study?.location || "Not provided"} />
+              <InfoItem icon={<Clock />} label="Availability" value={study?.availabilityTime} />
             </div>
 
             {/* Action Buttons */}

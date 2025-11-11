@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
             <PartnerDetails />
           </PrivateRoute>
         ),
-        loader: ({params}) => fetch(`http://localhost:5000/students/${params.id}`)
+        // loader: ({params}) => fetch(`http://localhost:5000/students/${params.id}`)
       },
     ],
   },
