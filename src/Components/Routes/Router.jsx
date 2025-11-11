@@ -9,6 +9,7 @@ import CreatePartner from "../../Pages/CreatePartner";
 import MyConnections from "../../Pages/MyConnections";
 import PrivateRoute from "./PrivateRoute";
 import PartnerDetails from "../../Pages/PartnerDetails";
+import UpdatePartner from "../../Pages/UpdatePartner";
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +50,16 @@ export const router = createBrowserRouter([
             <PartnerDetails />
           </PrivateRoute>
         ),
-        // loader: ({params}) => fetch(`http://localhost:5000/students/${params.id}`)
+        
+      },
+      {
+        path: "/update-partner/:id",
+        element: (
+          <PrivateRoute>
+            <UpdatePartner />
+          </PrivateRoute>
+        ),
+        loader: ({params}) => fetch(`http://localhost:5000/students/${params.id}`)
       },
     ],
   },

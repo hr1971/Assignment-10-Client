@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const MyConnectionCard = ({partner}) => {
     const {name,profileimage,subject,studyMode} = partner
+    // console.log(partner)
      return (
     <div className="bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-xl shadow-lg p-6 w-full max-w-sm mx-auto">
       {/* Profile Image */}
@@ -25,12 +27,13 @@ const MyConnectionCard = ({partner}) => {
 
       {/* Buttons */}
       <div className="flex justify-between mt-6">
-        <button
-          onClick={`onUpdate`}
+        <Link
+          
+          to={`/update-partner/${partner._id}`}
           className="flex-1 mr-2 bg-white text-blue-600 font-semibold py-2 rounded-lg shadow hover:bg-blue-100 transition"
         >
           Update
-        </button>
+        </Link>
         <button
           onClick={`onDelete`}
           className="flex-1 ml-2 bg-red-500 text-white font-semibold py-2 rounded-lg shadow hover:bg-red-600 transition"
