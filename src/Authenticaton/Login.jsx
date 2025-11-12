@@ -12,57 +12,49 @@ const Login = () => {
     });
   const { signInFunc, signInWithGoogle, setLoading, setUser,user } =
     use(AuthContext);
+
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  const from = location.state?.from?.pathname || '/';
+  // const from = location.state?.from?.pathname || '/';
 
-  // const from = location.state || "/";
+  const from = location.state?.from || "/";
   const emailRef = useRef(null);
 
-  const handleLogin = (e) => {
+    useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true });
+    }
+  }, [user, navigate, from]);
+
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    // console.log({ email, password });
 
-    signInFunc(email, password)
-      .then((res) => {
-        const user = res.user;
-        e.target.reset();
-        
-      Swal.fire({
-        title: "Good job!",
-        text: "LOgin Successful!",
-        icon: "success",
-      });
-      navigate(from,{replace:true})
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        setError(errorCode);
-      });
+    try {
+      await signInFunc(email, password);
+      Swal.fire("Good job!", "Login Successful!", "success");
+      navigate(from, { replace: true });
+    } catch (err) {
+      setError(err.code);
+    }
   };
 
   // google sign in
 
-  const handleGoogleSignin = () => {
-    signInWithGoogle().then((res) => {
-      setLoading(false);
-      setUser(res.user);
-      // navigate(from);
-      // navigate(`${location.state ? location.state : "/"}`);
-
-      Swal.fire({
-        title: "Good job!",
-        text: "LOgin Successful!",
-        icon: "success",
-      });
-      navigate(from,{replace:true})
-    });
+   const handleGoogleSignin = async () => {
+    try {
+      await signInWithGoogle();
+      Swal.fire("Good job!", "Login Successful!", "success");
+      navigate(from, { replace: true });
+    } catch (err) {
+      Swal.fire("Something went wrong!", "Login Unsuccessful!", "error");
+    }
   };
 
   return (

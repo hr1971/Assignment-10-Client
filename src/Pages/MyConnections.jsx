@@ -34,6 +34,7 @@ const MyConnections = () => {
 
   return <div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+        
         {study.map((partner) => (
           <MyConnectionCard key={partner._id} partner={partner} />
         ))}

@@ -1,18 +1,18 @@
 import React from "react";
 import { Facebook,  Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import { SiX } from "react-icons/si";
+import logo from '../assets/logo.png'
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-sky-100 to-blue-200 text-gray-700 mt-16">
+    <footer className="bg-gradient-to-r from-cyan-100 to-blue-200 text-gray-700 mt-16">
       <div className="max-w-7xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-3">
         
         {/* Logo & Description */}
         <div>
           <div className="flex items-center gap-2 mb-3">
-            {/* 🟦 Replace this with your logo */}
-            <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
-              SM
+            <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+              <img src={logo} alt="" />
             </div>
             <h2 className="text-2xl font-bold text-blue-600">STUDYMATE</h2>
           </div>

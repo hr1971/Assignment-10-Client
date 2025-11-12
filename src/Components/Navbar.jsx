@@ -11,7 +11,8 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink to={"/"}>Home</NavLink>
+        <NavLink to={"/"} className={({ isActive }) => isActive ? "active" : ""}
+>Home</NavLink>
       </li>
       <li>
         <NavLink to={"/find-partners"}>Find Partners</NavLink>
@@ -54,6 +55,7 @@ const Navbar = () => {
             </ul>
           </div>
           <a className="btn btn-ghost text-xl">
+            
             STUDY<span className="text-blue-500 font-bold">MATE</span>
           </a>
         </div>

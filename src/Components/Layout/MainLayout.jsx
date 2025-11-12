@@ -9,7 +9,7 @@ const MainLayout = () => {
       document.title = "Home";
     });
   return (
-    <div>
+    <div className="container mx-auto">
       <header>
         <Navbar />
       </header>

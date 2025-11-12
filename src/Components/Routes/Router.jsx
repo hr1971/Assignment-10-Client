@@ -10,6 +10,7 @@ import MyConnections from "../../Pages/MyConnections";
 import PrivateRoute from "./PrivateRoute";
 import PartnerDetails from "../../Pages/PartnerDetails";
 import UpdatePartner from "../../Pages/UpdatePartner";
+import ErrorPage from "../../Pages/ErrorPage";
 
 export const router = createBrowserRouter([
   {
@@ -19,7 +20,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
-        loader: () => fetch('http://localhost:5000/top-students')
+        loader: () => fetch("http://localhost:5000/top-students"),
       },
       {
         path: "/create-partner",
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
       {
         path: "/find-partners",
         element: <FindPartners />,
-       loader: () => fetch('http://localhost:5000/students') 
+        loader: () => fetch("http://localhost:5000/students"),
       },
 
       {
@@ -50,7 +51,6 @@ export const router = createBrowserRouter([
             <PartnerDetails />
           </PrivateRoute>
         ),
-        
       },
       {
         path: "/update-partner/:id",
@@ -59,7 +59,8 @@ export const router = createBrowserRouter([
             <UpdatePartner />
           </PrivateRoute>
         ),
-        loader: ({params}) => fetch(`http://localhost:5000/request/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/request/${params.id}`),
       },
     ],
   },
@@ -71,5 +72,9 @@ export const router = createBrowserRouter([
   {
     path: "/auth/register",
     element: <Register />,
+  },
+  {
+    path: "/*",
+    element: <ErrorPage></ErrorPage>,
   },
 ]);
