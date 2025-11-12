@@ -8,7 +8,7 @@ const Slider = () => {
   return (
     <div className="container mx-auto my-10">
       <h2 className="text-3xl font-bold text-center mb-6 text-blue-500">
-        Featured Toys
+       Our Features
       </h2>
       
 

@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import { IoLogIn } from "react-icons/io5";
@@ -7,6 +7,18 @@ import { FaGear } from "react-icons/fa6";
 
 const Navbar = () => {
   const { user, signOutFunc } = use(AuthContext);
+
+  const [theme,setTheme] = useState(localStorage.getItem('theme') || 'light')
+
+  useEffect(() => {
+    const html = document.querySelector('html')
+    html.setAttribute("data-theme", theme)
+    localStorage.setItem("theme",theme)
+  },[theme])
+
+  const handleTheme = (checked) => {
+    setTheme(checked ? "dark": "light")
+  }
 
   const links = (
     <>
