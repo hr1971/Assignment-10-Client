@@ -6,7 +6,8 @@ import Swal from "sweetalert2";
 const UpdatePartner = () => {
   const loadedData = useLoaderData();
   const [data, setData] = useState(loadedData);
-  //   console.log(study);
+  console.log('from loaded',{loadedData})
+    console.log('from data',{data});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ const UpdatePartner = () => {
       email: e.target.email.value,
     };
 
-    fetch(`http://localhost:5000/students/${data._id}`, {
+    fetch(`http://localhost:5000/request/${data._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +49,7 @@ const UpdatePartner = () => {
     <div className="card border border-gray-200 bg-base-100 w-full max-w-md mx-auto shadow-2xl rounded-2xl">
       <div className="card-body p-6 relative">
         <h2 className="text-2xl font-bold text-center mb-6">
-          Create Partner Profile
+          Update Partner Profile
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name Field */}
@@ -186,7 +187,7 @@ const UpdatePartner = () => {
               type="url"
               name="photo"
               required
-              defaultValue={data?.profileimage}
+              defaultValue={data?.profileImage}
               className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="https://example.com/image.jpg"
             />

@@ -8,6 +8,8 @@ const MyConnections = () => {
   const { user } = use(AuthContext);
   const [study, setStudy] = useState([]);
   const [loading, setLoading] = useState(true);
+    const [refetch, setRefecth] = useState(false)
+  
 
   useEffect(() => {
     fetch(`http://localhost:5000/my-request?email=${user.email}`, {
@@ -20,10 +22,10 @@ const MyConnections = () => {
         setStudy(data);
         setLoading(false);
       });
-  }, [user]);
+  }, [user,refetch]);
 
   if (loading) {
-    return <Loading></Loading>;
+    // return <Loading></Loading>;
   }
 
   return <div>

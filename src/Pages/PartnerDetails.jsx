@@ -37,7 +37,7 @@ const PartnerDetails = () => {
   },[user,id,refetch])
 
   if (loading) {
-    return <Loading />;
+    // return <Loading />;
   }
 
   const handleRequest = () => {

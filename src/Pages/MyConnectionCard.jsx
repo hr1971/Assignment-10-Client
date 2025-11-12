@@ -1,9 +1,67 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { use, useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router';
+import Swal from 'sweetalert2';
+import { AuthContext } from '../Context/AuthContext';
 
 const MyConnectionCard = ({partner}) => {
     const {name,profileimage,subject,studyMode} = partner
-    // console.log(partner)
+     const navigate = useNavigate();
+  const { id } = useParams();
+  const [model, setModel] = useState({});
+  const [loading, setLoading] = useState(true);
+  const { user } = use(AuthContext);
+  const [refetch, setRefecth] = useState(false)
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/request/${id}`, {
+      headers: {
+        authorization: `Bearer ${user.accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setModel(data.result);
+        console.log(" Api called!")
+        console.log(data);
+        setLoading(false);
+      });
+  }, [user, id, refetch]);
+
+    const handleDlete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/request/${partner._id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            // navigate("/all-models");
+
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+            // setRefetch(!refetch)
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
      return (
     <div className="bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-xl shadow-lg p-6 w-full max-w-sm mx-auto">
       {/* Profile Image */}
@@ -35,7 +93,7 @@ const MyConnectionCard = ({partner}) => {
           Update
         </Link>
         <button
-          onClick={`onDelete`}
+          onClick={handleDlete}
           className="flex-1 ml-2 bg-red-500 text-white font-semibold py-2 rounded-lg shadow hover:bg-red-600 transition"
         >
           Delete
