@@ -1,9 +1,14 @@
-import React, { use } from "react";
+import React, { use, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const CreatePartner = () => {
+
+  useEffect(() => {
+      document.title = "Create Profile";
+    });
+
   const { user } = use(AuthContext);
 
   const handleSubmit = (e) => {
@@ -202,7 +207,7 @@ const CreatePartner = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="btn w-full text-white mt-6 rounded-full bg-linear-to-r from-blue-500 to-[#B8B8FF] hover:from-blue-600 hover:to-sky-700"
+            className="btn w-full text-white mt-6 rounded-full bg-linear-to-r from-blue-500 to-cyan-200 hover:from-blue-600 hover:to-sky-700"
           >
             Create Profile
           </button>

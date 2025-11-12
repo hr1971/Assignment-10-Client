@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 const HomeCard = ({user}) => {
     const {name,profileimage,rating,subject,_id} = user
      return (
-    <div className="bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition duration-300">
+    <div className="bg-gradient-to-br from-blue-500 to-cyan-200 text-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition duration-300">
       {/* Profile Image */}
       <div className="flex justify-center">
         <img

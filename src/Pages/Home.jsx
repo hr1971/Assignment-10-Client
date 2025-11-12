@@ -2,6 +2,7 @@ import React from 'react';
 import Slider from '../Components/Slider';
 import { useLoaderData } from 'react-router';
 import HomeCard from '../Components/HomeCard';
+import Review from '../Review';
 
 const Home = () => {
     const data = useLoaderData()
@@ -11,7 +12,7 @@ const Home = () => {
             
             <Slider></Slider>
 
-            <div className='text-center text-2xl text-blue-500 font-bold mt-10'>
+            <div className='text-center text-3xl text-blue-500 font-bold mt-10'>
             Top Study Partner
             </div>
             
@@ -20,6 +21,8 @@ const Home = () => {
             data.map(user => <HomeCard key={user._id} user={user}></HomeCard>)
         }
         </div>
+
+        <Review></Review>
 
         </div>
     );

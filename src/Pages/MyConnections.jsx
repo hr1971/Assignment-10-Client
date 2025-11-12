@@ -5,6 +5,10 @@ import PartnerCard from "./PartnerCard";
 import MyConnectionCard from "./MyConnectionCard";
 
 const MyConnections = () => {
+
+  useEffect(() => {
+      document.title = "My Connection";
+    });
   const { user } = use(AuthContext);
   const [study, setStudy] = useState([]);
   const [loading, setLoading] = useState(true);

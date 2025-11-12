@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const UpdatePartner = () => {
+  useEffect(() => {
+      document.title = "Update Partner";
+    });
   const loadedData = useLoaderData();
   const [data, setData] = useState(loadedData);
   console.log('from loaded',{loadedData})
@@ -208,7 +211,7 @@ const UpdatePartner = () => {
 
           <button
             type="submit"
-            className="flex-1 mr-2 bg-white text-blue-600 font-semibold py-2 rounded-lg shadow hover:bg-blue-100 transition w-full"
+            className="flex-1 mr-2 bg-gradient-to-br from-blue-500 to-cyan-200 text-white font-semibold hover:bg-blue-500 py-2 rounded-lg shadow hover:bg-blue-100 transition w-full"
           >
             Update Profile
           </button>

@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router';
 import PartnerCard from './PartnerCard';
 
 const FindPartners = () => {
+
+    useEffect(() => {
+        document.title = "Find Partners";
+      });
+    
     const data = useLoaderData()
     console.log(data)
     const [partners,setPartners] = useState(data)

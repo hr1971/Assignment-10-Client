@@ -63,7 +63,7 @@ const MyConnectionCard = ({partner}) => {
     });
   };
      return (
-    <div className="bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-xl shadow-lg p-6 w-full max-w-sm mx-auto">
+    <div className="bg-gradient-to-br from-blue-500 to-cyan-200 text-white rounded-xl shadow-lg p-6 w-full max-w-sm mx-auto">
       {/* Profile Image */}
       <div className="flex justify-center">
         <img
