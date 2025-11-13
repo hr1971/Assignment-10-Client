@@ -13,16 +13,12 @@ const Register = () => {
 
   const [show, setShow] = useState(false);
 
-  const {
-    signInWithGoogle,
-    createUserFunc,
-    user,
-    updateUserProfile,
-  } = use(AuthContext);
+  const { signInWithGoogle, createUserFunc, user, updateUserProfile } =
+    use(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from || "/";
+  const from = location.state?.from?.pathname || '/' ;
 
   useEffect(() => {
     if (user) {
@@ -41,9 +37,11 @@ const Register = () => {
     const regExp =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()\-_=+])[A-Za-z\d@$!%*?&#^()\-_=+]{8,}$/;
 
-      if (!regExp.test(password)) {
-      Swal.fire( "Something Went Wrong!",
-        "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character","error"
+    if (!regExp.test(password)) {
+      Swal.fire(
+        "Something Went Wrong!",
+        "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character",
+        "error"
       );
       return;
     }
@@ -52,6 +50,7 @@ const Register = () => {
       await createUserFunc(email, password);
       await updateUserProfile(displayName, photoURL);
       Swal.fire("Good job!", "User Created Successfully!", "success");
+      navigate(from, { replace: true });
     } catch (error) {
       console.error(error);
       Swal.fire("Something went wrong!", error.message, "error");
@@ -62,10 +61,13 @@ const Register = () => {
     try {
       await signInWithGoogle();
       Swal.fire("Good job!", "Login Successful!", "success");
+      navigate(from, { replace: true });
     } catch (err) {
       Swal.fire("Something went wrong!", "Login Unsuccessful!", "error");
     }
   };
+
+
   return (
     <div className="hero  min-h-screen">
       <div className="hero-content flex-col ">
