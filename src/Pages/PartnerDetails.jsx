@@ -1,40 +1,47 @@
-import React, { use, useEffect, useState } from 'react';
-import Loading from '../Components/Loading/Loading';
-import { Link,  useNavigate, useParams } from 'react-router';
-import { 
-  Star, MapPin, BookOpen, Users, Clock, 
-  GraduationCap, Download, Trash2, Pencil, 
+import React, { use, useEffect, useState } from "react";
+import Loading from "../Components/Loading/Loading";
+import { Link, useNavigate, useParams } from "react-router";
+import {
+  Star,
+  MapPin,
+  BookOpen,
+  Users,
+  Clock,
+  GraduationCap,
+  Download,
+  Trash2,
+  Pencil,
   User,
-  UserPlus
+  UserPlus,
 } from "lucide-react";
-import InfoItem from '../Components/InfoItem';
-import { AuthContext } from '../Context/AuthContext';
-import Swal from 'sweetalert2';
+import InfoItem from "../Components/InfoItem";
+import { AuthContext } from "../Context/AuthContext";
+import Swal from "sweetalert2";
 
 // -------------------------------------
 
 const PartnerDetails = () => {
-  const {user} = use(AuthContext)
+  const { user } = use(AuthContext);
   const [loading, setLoading] = useState(false);
-  const [study,setStudy] = useState({})
-  const navigate = useNavigate()
-  const {id} = useParams()
-  const [refetch,setRefetch] = useState(false)
+  const [study, setStudy] = useState({});
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [refetch, setRefetch] = useState(false);
 
-  useEffect(()=> {
-    fetch(`http://localhost:5000/students/${id}`,{
+  useEffect(() => {
+    fetch(`https://assignment-10-server-gamma-ten.vercel.app/students/${id}`, {
       headers: {
         authorization: `Bearer ${user.accessToken}`,
       },
     })
-     .then((res) => res.json())
+      .then((res) => res.json())
       .then((data) => {
         setStudy(data);
-        console.log(" Api called!")
-        console.log(data);
+        // console.log(" Api called!");
+        // console.log(data);
         setLoading(false);
       });
-  },[user,id,refetch])
+  }, [user, id, refetch]);
 
   if (loading) {
     // return <Loading />;
@@ -42,47 +49,46 @@ const PartnerDetails = () => {
 
   const handleRequest = () => {
     const sendRequest = {
-      name:study.name,
-      profileImage:study.profileimage,
-      subject:study.subject,
-      request_by:user.email,
-      studyMode:study.studyMode,
-      availabilityTime:study.availabilityTime,
-      email:study.email,
-      location:study.location,
-      patnerCount:study.patnerCount,
-      rating:study.rating,
-      id:study.id,
-    }
+      name: study.name,
+      profileImage: study.profileimage,
+      subject: study.subject,
+      request_by: user.email,
+      studyMode: study.studyMode,
+      availabilityTime: study.availabilityTime,
+      email: study.email,
+      location: study.location,
+      patnerCount: study.patnerCount,
+      rating: study.rating,
+      id: study.id,
+    };
     // console.log({sendRequest})
-    fetch(`http://localhost:5000/request/${study._id}`,{
-      method:'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body:JSON.stringify(sendRequest),
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-       Swal.fire({
-      title: "Good job",
-      text: "Request Send Successfully",
-      icon: "success",
-  
-    })
-    setRefetch(!refetch)
-    })
+    fetch(
+      `https://assignment-10-server-gamma-ten.vercel.app/request/${study._id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sendRequest),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        Swal.fire({
+          title: "Good job",
+          text: "Request Send Successfully",
+          icon: "success",
+        });
+        setRefetch(!refetch);
+      });
   };
 
-  const handleDelete = () => {
-    console.log("Delete clicked!");
-  };
+  
 
   return (
     <div className="max-w-5xl mx-auto p-6 md:p-10">
       <div className="relative bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 rounded-3xl shadow-lg border border-blue-100 overflow-hidden transition-all hover:shadow-xl">
-
         {/* Top Gradient Bar */}
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-indigo-500 to-sky-500"></div>
 
@@ -111,12 +117,36 @@ const PartnerDetails = () => {
 
             {/* Info Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 text-gray-700">
-              <InfoItem icon={<BookOpen />} label="Subject" value={study?.subject} />
-              <InfoItem icon={<Clock />} label="Study Mode" value={study?.studyMode} />
-              <InfoItem icon={<GraduationCap />} label="Experience Level" value={study?.experienceLevel} />
-              <InfoItem icon={<Users />} label="Partner Count" value={study?.patnerCount} />
-              <InfoItem icon={<MapPin />} label="Location" value={study?.location || "Not provided"} />
-              <InfoItem icon={<Clock />} label="Availability" value={study?.availabilityTime} />
+              <InfoItem
+                icon={<BookOpen />}
+                label="Subject"
+                value={study?.subject}
+              />
+              <InfoItem
+                icon={<Clock />}
+                label="Study Mode"
+                value={study?.studyMode}
+              />
+              <InfoItem
+                icon={<GraduationCap />}
+                label="Experience Level"
+                value={study?.experienceLevel}
+              />
+              <InfoItem
+                icon={<Users />}
+                label="Partner Count"
+                value={study?.patnerCount}
+              />
+              <InfoItem
+                icon={<MapPin />}
+                label="Location"
+                value={study?.location || "Not provided"}
+              />
+              <InfoItem
+                icon={<Clock />}
+                label="Availability"
+                value={study?.availabilityTime}
+              />
             </div>
 
             {/* Action Buttons */}

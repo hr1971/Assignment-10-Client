@@ -12,6 +12,7 @@ import PartnerDetails from "../../Pages/PartnerDetails";
 import UpdatePartner from "../../Pages/UpdatePartner";
 import ErrorPage from "../../Pages/ErrorPage";
 import Profile from "../../Pages/Profile";
+import Loading from "../Loading/Loading";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +22,11 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
-        loader: () => fetch("http://localhost:5000/top-students"),
+        loader: () =>
+          fetch(
+            "https://assignment-10-server-gamma-ten.vercel.app/top-students"
+          ),
+          hydrateFallbackElement:<Loading></Loading>
       },
       {
         path: "/create-partner",
@@ -34,7 +39,9 @@ export const router = createBrowserRouter([
       {
         path: "/find-partners",
         element: <FindPartners />,
-        loader: () => fetch("http://localhost:5000/students"),
+        loader: () =>
+          fetch("https://assignment-10-server-gamma-ten.vercel.app/students"),
+        hydrateFallbackElement:<Loading></Loading>
       },
 
       {
@@ -61,12 +68,15 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/request/${params.id}`),
+          fetch(
+            `https://assignment-10-server-gamma-ten.vercel.app/request/${params.id}`
+          ),
+          hydrateFallbackElement:<Loading></Loading>
       },
       {
-        path:'/profile',
-        element:<Profile></Profile>
-      }
+        path: "/profile",
+        element: <Profile></Profile>,
+      },
     ],
   },
 

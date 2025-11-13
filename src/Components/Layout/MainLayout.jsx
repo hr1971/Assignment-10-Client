@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import Navbar from "../Navbar";
-import { Outlet } from "react-router";
+import { Outlet, useNavigation } from "react-router";
 import Footer from "../Footer";
 import Slider from "../Slider";
+import Loading from "../Loading/Loading";
 
 const MainLayout = () => {
   useEffect(() => {
       document.title = "Home";
     });
+    const {state} = useNavigation()
   return (
     <div className="container mx-auto">
       <header>
@@ -18,7 +20,9 @@ const MainLayout = () => {
           {/* <Slider /> */}
         </section>
         <section>
-          <Outlet />
+
+        {state=="loading" ? <Loading></Loading>  : <Outlet /> } 
+
         </section>
       </main>
       <footer>

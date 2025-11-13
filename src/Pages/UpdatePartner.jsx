@@ -5,12 +5,12 @@ import Swal from "sweetalert2";
 
 const UpdatePartner = () => {
   useEffect(() => {
-      document.title = "Update Partner";
-    });
+    document.title = "Update Partner";
+  });
   const loadedData = useLoaderData();
   const [data, setData] = useState(loadedData);
-  console.log('from loaded',{loadedData})
-    console.log('from data',{data});
+  // console.log("from loaded", { loadedData });
+  // console.log("from data", { data });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,16 +27,19 @@ const UpdatePartner = () => {
       email: e.target.email.value,
     };
 
-    fetch(`http://localhost:5000/request/${data._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
+    fetch(
+      `https://assignment-10-server-gamma-ten.vercel.app/request/${data._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         Swal.fire({
           title: "Good job!",
           text: "Update Successfully!",

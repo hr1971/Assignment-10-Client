@@ -4,10 +4,9 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const CreatePartner = () => {
-
   useEffect(() => {
-      document.title = "Create Profile";
-    });
+    document.title = "Create Profile";
+  });
 
   const { user } = use(AuthContext);
 
@@ -27,7 +26,7 @@ const CreatePartner = () => {
       email: user.email,
     };
 
-    fetch("http://localhost:5000/students", {
+    fetch("https://assignment-10-server-gamma-ten.vercel.app/students", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -42,7 +41,7 @@ const CreatePartner = () => {
           text: "Successfully Added!",
           icon: "success",
         });
-        console.log(data);
+        // console.log(data);
         e.target.reset();
       })
       .catch((err) => {

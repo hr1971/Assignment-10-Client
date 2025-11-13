@@ -15,14 +15,16 @@ const FindPartners = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     const search_text = e.target.search.value;
-    const level = e.target.experienceLevel.value
-    console.log(search_text);
+    const level = e.target.experienceLevel.value;
+    // console.log(search_text);
     setLoading(true);
 
-    fetch(`http://localhost:5000/search?search=${search_text}&experienceLevel=${level}`)
+    fetch(
+      `https://assignment-10-server-gamma-ten.vercel.app/search?search=${search_text}&experienceLevel=${level}`
+    )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setPartners(data);
         setLoading(false);
       });
@@ -58,7 +60,10 @@ const FindPartners = () => {
           <input name="search" type="search" placeholder="Search" />
         </label>
         {/*  */}
-        <select name="experienceLevel" className="select select-bordered rounded-full">
+        <select
+          name="experienceLevel"
+          className="select select-bordered rounded-full"
+        >
           <option value="">All Levels</option>
           <option value="Beginner">Beginner</option>
           <option value="Intermediate">Intermediate</option>

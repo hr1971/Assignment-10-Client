@@ -5,41 +5,43 @@ import PartnerCard from "./PartnerCard";
 import MyConnectionCard from "./MyConnectionCard";
 
 const MyConnections = () => {
-
   useEffect(() => {
-      document.title = "My Connection";
-    });
+    document.title = "My Connection";
+  });
   const { user } = use(AuthContext);
   const [study, setStudy] = useState([]);
   const [loading, setLoading] = useState(true);
-    const [refetch, setRefecth] = useState(false)
-  
+  const [refetch, setRefecth] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/my-request?email=${user.email}`, {
-      headers: {
-        authorization: `Bearer ${user.accessToken}`,
-      },
-    })
+    fetch(
+      `https://assignment-10-server-gamma-ten.vercel.app/my-request?email=${user.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${user.accessToken}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setStudy(data);
         setLoading(false);
       });
-  }, [user,refetch]);
+  }, [user, refetch]);
 
   if (loading) {
     // return <Loading></Loading>;
   }
 
-  return <div>
+  return (
+    <div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-        
         {study.map((partner) => (
           <MyConnectionCard key={partner._id} partner={partner} />
         ))}
       </div>
-  </div>;
+    </div>
+  );
 };
 
 export default MyConnections;
