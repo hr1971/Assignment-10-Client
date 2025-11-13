@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 const Register = () => {
   useEffect(() => {
     document.title = "Register";
-  });
+  }, []);
 
   const [show, setShow] = useState(false);
 
@@ -17,60 +17,55 @@ const Register = () => {
     signInWithGoogle,
     createUserFunc,
     user,
-    setUser,
     updateUserProfile,
-    setLoading,
   } = use(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from || "/";
 
-  const handleRegister = (e) => {
+  useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true });
+    }
+  }, [user, from, navigate]);
+
+  const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     const displayName = form.name.value;
     const photoURL = form.photo.value;
-    // console.log({email,password,displayName,photoURL})
 
-    // toast.loading('Creating user....')
+    const regExp =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()\-_=+])[A-Za-z\d@$!%*?&#^()\-_=+]{8,}$/;
 
-    createUserFunc(email, password).then((res) => {
-      navigate(from,{replace:true})
+      if (!regExp.test(password)) {
+      Swal.fire( "Something Went Wrong!",
+        "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character","error"
+      );
+      return;
+    }
 
-      updateUserProfile(displayName, photoURL)
-        .then(() => {
-          Swal.fire({
-            title: "Good job!",
-            text: "User Created Successfully!",
-            icon: "success",
-          });
-        })
-        .catch((error) => {})
-        .catch((error) => {
-          const errorMessage = error.message;
-          toast.error(errorMessage);
-        });
-    });
+    try {
+      await createUserFunc(email, password);
+      await updateUserProfile(displayName, photoURL);
+      Swal.fire("Good job!", "User Created Successfully!", "success");
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Something went wrong!", error.message, "error");
+    }
   };
 
-  const handleGoogleSignin = () => {
-      signInWithGoogle().then((res) => {
-        setLoading(false);
-        setUser(res.user);
-        
-  
-        Swal.fire({
-          title: "Good job!",
-          text: "LOgin Successful!",
-          icon: "success",
-        });
-        navigate(from,{replace:true})
-      });
-    };
-
+  const handleGoogleSignin = async () => {
+    try {
+      await signInWithGoogle();
+      Swal.fire("Good job!", "Login Successful!", "success");
+    } catch (err) {
+      Swal.fire("Something went wrong!", "Login Unsuccessful!", "error");
+    }
+  };
   return (
     <div className="hero  min-h-screen">
       <div className="hero-content flex-col ">
