@@ -11,6 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 import PartnerDetails from "../../Pages/PartnerDetails";
 import UpdatePartner from "../../Pages/UpdatePartner";
 import ErrorPage from "../../Pages/ErrorPage";
+import Profile from "../../Pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/request/${params.id}`),
       },
+      {
+        path:'/profile',
+        element:<Profile></Profile>
+      }
     ],
   },
 
